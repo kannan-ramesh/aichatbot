@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>AI ChatBot</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>AI ChatBot</h1>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+           <!-- Initial AI greeting -->
+		    <div class="message bot-message" th:if="${#lists.isEmpty(chatHistory)}">
+		        <p>Hello! I'm your AI assistant. How can I help today?</p>
+		    </div>
+
+		    <!-- Chat history -->
+		    <div th:each="msg : ${chatHistory}">
+		        <div th:class="${msg.sender == 'user'} ? 'message user-message' : 'message bot-message'">
+		            <p th:text="${msg.content}"></p>
+		        </div>
+		    </div>
+        </div>
+        <div class="chat-input">
+            <form action="/chat" method="post">
+                <input type="text" name="reqChat" id="user-input" placeholder="Type your message here..." required>
+                <button id="send-button">Send</button>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
